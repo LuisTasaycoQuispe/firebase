@@ -1,1 +1,1 @@
-![Ejemplo de imagen](assets/firebase_inicio.png)
+![Ejemplo de imagen](assets/firebase_f.png)
