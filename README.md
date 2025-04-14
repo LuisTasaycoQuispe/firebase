@@ -6,7 +6,7 @@
 
 
 
-## 📂 **Estructura de Carpetas del Proyecto**
+## 📂 **Estructura de Carpetas del Proyecto** Frontend
 
 
 #### Estructura de Archivos:
@@ -33,6 +33,7 @@
 El **`AuthService`** se encarga de gestionar toda la autenticación y autorización de usuarios en la aplicación. Utiliza Firebase para el inicio de sesión, almacenamiento de tokens en el `localStorage` y la obtención de información del usuario desde la API. Además, verifica el estado de autenticación, maneja la asignación de roles (como `ADMIN`), permite la reautenticación para cambios sensibles y gestiona la actualización de datos como la contraseña y el correo electrónico del usuario. También incluye funcionalidades para enviar solicitudes de restablecimiento de contraseña y cerrar sesión, limpiando los datos de autenticación almacenados.
 
 ---
+
 ## 🔧 Funcionalidades Principales
 
 - 🟢 🔐 **Autenticación con Firebase:** Permite el inicio de sesión y mantiene la sesión activa usando tokens.
@@ -137,11 +138,15 @@ checkIfAdmin(): Observable<boolean> {
 
 ---
 
+###   🛡️🔐 Proteccion de Rutas Mediante **AuthGuard**  
+
+</br>
+Este archivo define un guardia de autenticación (`AuthGuard`) en Angular, que protege las rutas de la aplicación asegurándose de que solo los usuarios autenticados y con los roles adecuados puedan acceder a ciertas páginas. Si el usuario no está autenticado o no tiene el rol requerido, se redirige automáticamente al login o a la página de inicio. Además, evita que los usuarios autenticados accedan nuevamente a la página de login.
+
+
+</br>
 </br>
 
-### Proteccion de Rutas Mediante **AuthGuard**  🔒🚪
-
-Este archivo define un guardia de autenticación (`AuthGuard`) en Angular, que protege las rutas de la aplicación asegurándose de que solo los usuarios autenticados y con los roles adecuados puedan acceder a ciertas páginas. Si el usuario no está autenticado o no tiene el rol requerido, se redirige automáticamente al login o a la página de inicio. Además, evita que los usuarios autenticados accedan nuevamente a la página de login.
 
 ``` ts
 // El guard que protege las rutas según la autenticación y el rol
@@ -184,5 +189,94 @@ private checkAccess(expectedRole?: string): Observable<boolean | UrlTree> {
 
 🟢 ***Este codigo es la clave 🔑 para proteger la ruta en Angular, usando un guard que verifica si el usuario está autenticado y tiene el rol esperado***
 
-
 ---
+
+## 📂 **Estructura de Carpetas del Proyecto** Backend
+
+
+
+``` bash
+
+📁 src/
+└── 📁 main/
+    └── 📁 java/pe/edu/vallegrande/user/
+    │   ├── 📁 config/         
+    │   │   ├── 📄 CustomAuthenticationToken.java
+    │   │   ├── 📄 FirebaseConfig.java
+    │   │   └── 📄 SecurityConfig.java
+    │   ├── 📁 controller/      
+    │   ├── 📁 dto/             
+    │   ├── 📁 model/           
+    │   │   └── 📄 User.java
+    │   └── 📁 repository/      
+    │   │   └── 📄 UsersRepository.java
+    │   └── 📁 service/         
+    │       ├── 📄 EmailService.java
+    │       └── 📄 UserService.java
+    │  
+    └── 📁 resources
+            ├── 📁 config/
+            │   └── 📄 security-prs1-firebase-adminsdk-fbsvc-b47fdda0f7.json
+            └── 📄 application.yml
+```
+
+### Archivo security-prs1-firebase  🗝️ 
+
+
+<img src="https://damphat.gallerycdn.vsassets.io/extensions/damphat/firebase-json/1.3.0/1685010293285/Microsoft.VisualStudio.Services.Icons.Default" alt="Imagen de api" width="150" align="left" style="margin-right: 20px; margin-bottom: 20px;">
+
+
+
+El archivo ***security-prs1-firebase-adminsdk-fbsvc-b47fdda0f7.json*** es una credencial de tipo cuenta de servicio proporcionada por Firebase. Este archivo permite que tu aplicación Spring Boot se conecte de forma segura a los servicios de Firebase como administrador, autenticándose con privilegios elevados. Es fundamental cuando necesitas realizar operaciones internas en Firebase sin intervención del usuario, como acceder a la base de datos, validar tokens, o enviar notificaciones.
+
+</br>
+
+``` json
+
+{
+  "type": "service_account",
+  "project_id": "security-prs1",
+  "private_key_id": "REDACTED",
+  "private_key": "REDACTED",
+  "client_email": "firebase-adminsdk-fbsvc@security-prs1.iam.gserviceaccount.com",
+  "client_id": "100590623008739978220",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-fbsvc%40security-prs1.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
+
+
+```
+
+### 📌 ¿Para qué sirve?
+- 🟢 Autenticar tu backend con Firebase como administrador.
+
+- 🟢 Verificar manualmente los tokens JWT generados por Firebase Authentication.
+
+- 🟢 Enviar notificaciones push a través de Firebase Cloud Messaging (FCM).
+
+- 🟢 Crear, actualizar o eliminar usuarios directamente desde el backend.
+
+- 🟢 Leer y escribir datos en Firestore o Realtime Database con permisos elevados.
+
+- 🟢 Realizar pruebas y configuraciones administrativas sin usar la consola web de Firebase.
+
+
+### El aplication.yml ⚙️
+
+En este archivo application.yml estás manejando configuración de seguridad con JWT de Firebase usando Spring Security. Ademas de la conexion con la base de datos
+
+``` yml
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://securetoken.google.com/security-prs1
+          jwk-set-uri: https://www.googleapis.com/service_accounts/v1/jwk/securetoken@system.gserviceaccount.com
+
+```
+
+
