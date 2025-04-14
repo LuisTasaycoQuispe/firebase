@@ -1,4 +1,4 @@
-![Ejemplo de imagen](assets/firebase_f.png)
+![Ejemplo de imagen](firebase_f.png)
 
 # 🕵️ PRS222_Standards
 
