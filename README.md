@@ -2,13 +2,80 @@
 
 # 🕵️ PRS222_Standards
 
-## 🔐 **Estándar de Seguridad** 🛡️🔒
 
 
+
+
+## Índice
+
+1. [Estándar de Seguridad](#estándar-de-seguridad)
+   - [Seguridad](#seguridad)
+   - [Buenas Prácticas](#buenas-prácticas)
+   - [Tecnologías de Seguridad](#tecnologías-de-seguridad)
+
+2. [Estructura de Archivos del Proyecto Frontend](#estructura-de-archivos-del-proyecto-frontend)
+   - [Estructura de Carpetas](#estructura-de-carpetas)
+   - [Frontend](#frontend)
+
+3. [Inicio de Sesión - Usuario o Admin](#inicio-de-sesión---usuario-o-admin)
+   - [Autenticación con Firebase](#autenticación-con-firebase)
+   - [Manejo de Roles](#manejo-de-roles)
+
+4. [Protección de Rutas mediante AuthGuard](#protección-de-rutas-mediante-authguard)
+
+5. [API Gateway](#api-gateway)
+
+---
+#  Estándar de Seguridad 🛡️
+## 🔐 **Seguridad** 
+
+- **Autenticación**: 
+  - 🚀 Implementación de **JWT (JSON Web Tokens)** para una autenticación segura y eficiente.
+  - 🔒 **Almacenamiento seguro de tokens**: Los tokens se almacenan de forma segura en el cliente y el servidor, evitando exposiciones de información sensible.
+  - 🛡️ **Spring Security**: Integración con **Spring Security** para gestionar la autenticación, autorización y proteger las rutas del servidor contra accesos no autorizados.
+
+- **Contraseñas**: 
+  - 🔑 Las contraseñas son **cifradas** usando algoritmos seguros como **BCrypt** o **PBKDF2**, lo que garantiza que las contraseñas no sean almacenadas en texto claro.
+  - 🧂 Se utiliza **salting** para prevenir ataques de diccionario y de fuerza bruta, añadiendo un valor único a cada contraseña antes de cifrarla.
+
+- **Protección de sesiones**: 
+  - ⏳ Los tokens de autenticación tienen una **fecha de expiración** configurada para asegurar que las sesiones no sean permanentes.
+  - 🛑 **Protección CSRF** (Cross-Site Request Forgery) implementada para evitar que atacantes envíen solicitudes maliciosas en nombre del usuario.
+
+- **CORS**: 
+  - 🌐 Configuración de **CORS** (Cross-Origin Resource Sharing) para asegurar que solo los orígenes permitidos puedan acceder a los recursos del servidor.
+
+---
+
+## 🛡️ **Buenas Prácticas** 
+
+- **Validación**: 
+  - ✅ **Validación de entradas**: Se validan y sanitizan todos los datos de entrada para evitar ataques como inyecciones SQL y XSS.
+  - 🧮 Uso de **expresiones regulares** para la validación de campos como correos electrónicos, contraseñas y números de teléfono, garantizando que los datos sean correctos y seguros.
+
+- **Control de acceso**: 
+  - 👮‍♂️ **Roles de usuario**: Los accesos a ciertas partes de la aplicación están controlados por roles de usuario (como admin, usuario regular, etc.), asegurando que cada usuario solo tenga acceso a lo que le corresponde.
+
+- **XSS (Cross-Site Scripting)**: 
+  - 🛑 **Protección contra XSS**: Se utilizan herramientas como **Angular Sanitizer** para prevenir que scripts maliciosos sean ejecutados en el navegador del usuario.
+
+- **Auditoría**: 
+  - 📚 Se implementan **registros de eventos** para hacer seguimiento de todas las acciones relevantes, como inicio de sesión, cambios de datos y accesos a recursos protegidos, ayudando a identificar accesos no autorizados o intentos de ataque.
+
+---
+
+## ⚙️ **Tecnologías de Seguridad** 
+
+- 🔒 **Spring Security**: Proporciona un marco robusto para gestionar la seguridad en aplicaciones Java, incluyendo autenticación, autorización, protección contra CSRF, etc.
+- 🗝️ **JWT**: Utilizado para generar tokens seguros y manejables que permiten la autenticación y autorización en aplicaciones web y móviles.
+- 🔑 **BCrypt/PBKDF2**: Algoritmos de cifrado para garantizar la seguridad de las contraseñas almacenadas.
+- 🛡️ **Helmet**: Middleware para asegurar que las cabeceras HTTP se configuren de manera adecuada y evitar ciertos tipos de ataques en las aplicaciones Node.js.
+- 🌐 **CORS**: Configuración para controlar qué orígenes pueden hacer peticiones a los recursos del servidor, protegiendo la aplicación de accesos no deseados desde otros dominios.
+- 🧼 **Angular Sanitizer**: Herramienta para eliminar código malicioso y proteger las aplicaciones Angular contra ataques XSS.
 
 ## [![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Bungee+Spice&size=22&pause=1000&width=803&lines=%F0%9F%93%82+Estructura+de+Carpetas+del+Proyecto+Frontend+(Security))](https://git.io/typing-svg)
 
-### Estructura de Archivos:
+## Estructura de Archivos:
 
 ```bash
 📁 app
