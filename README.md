@@ -6,8 +6,7 @@
 
 
 
-## 📂 **Estructura de Carpetas del Proyecto** Frontend
-
+## [![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Bungee+Spice&size=22&pause=1000&width=803&lines=%F0%9F%93%82+Estructura+de+Carpetas+del+Proyecto+Frontend+(Security))](https://git.io/typing-svg)
 
 #### Estructura de Archivos:
 
@@ -191,9 +190,9 @@ private checkAccess(expectedRole?: string): Observable<boolean | UrlTree> {
 
 ---
 
-## 📂 **Estructura de Carpetas del Proyecto** Backend
+## [![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Bungee+Spice&size=22&pause=1000&width=803&lines=%F0%9F%93%82+Estructura+de+Carpetas+del+Proyecto+Backend(Security))](https://git.io/typing-svg)
 
-## API Gateway
+## 🌐 API Gateway
 
 
 <img src="https://cdn-icons-png.flaticon.com/512/10169/10169724.png" alt="Imagen de api" width="130" align="left" style="margin-right: 20px; margin-bottom: 20px;">
@@ -233,6 +232,80 @@ api-gateway/
 
 
 ```
+
+
+###  🔐 Configuración de Seguridad y CORS en el API Gateway
+
+En este proyecto, se ha configurado el **API Gateway** para manejar la seguridad, autenticación y control de acceso a los microservicios, además de gestionar las solicitudes CORS entre el frontend y el backend.
+
+#### 1. 🛡️ **Configuración de Seguridad (SecurityConfig)**
+Esta clase configura la seguridad para las solicitudes que llegan al API Gateway. Las principales funciones son:
+
+- **Deshabilitar CSRF**: Ya que no es necesario en un entorno de microservicios.
+- **Autenticación de Usuarios**: Se utiliza JWT para la autenticación de usuarios. La ruta de **olvidé la contraseña** (`/api/auth/forgot-password`) está exenta de autenticación.
+  
+``` java
+  @Bean
+  public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
+      return http
+              .csrf(ServerHttpSecurity.CsrfSpec::disable)
+              .authorizeExchange(exchanges -> exchanges
+                      .pathMatchers("/api/auth/forgot-password").permitAll()  // Sin autenticación
+                      .anyExchange().authenticated()  // Requiere autenticación para el resto
+              )
+              .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults())) // JWT para autenticación
+              .build();
+  }
+```
+
+
+#### 2. 🌐 **Configuración de CORS (WebConfig)**
+
+Se configura **CORS** para permitir que las peticiones del frontend (en este caso, ejecutado en `localhost:4200`) puedan interactuar con el **API Gateway** sin problemas de seguridad:
+
+- Permite métodos como `GET`, `POST`, `PUT`, `DELETE`.
+- Acepta todas las cabeceras y permite credenciales.
+
+```java
+@Bean
+public CorsConfigurationSource corsConfigurationSource() {
+    CorsConfiguration config = new CorsConfiguration();
+    config.setAllowedOriginPatterns(List.of("http://localhost:4200"));
+    config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+    config.setAllowedHeaders(List.of("*"));
+    config.setAllowCredentials(true);
+
+    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    source.registerCorsConfiguration("/**", config);
+    return source;
+
+
+###  🔑 Filtro de Autorización (AuthHeaderFilter)
+
+Este filtro intercepta las solicitudes entrantes y, si contiene un header Authorization con un token Bearer, lo agrega a la solicitud. De esta forma, el token es enviado correctamente a los microservicios para su validación.
+
+
+``` java
+
+@Override
+public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+    String authHeader = exchange.getRequest().getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
+    if (authHeader != null && authHeader.startsWith("Bearer ")) {
+        ServerHttpRequest mutatedRequest = exchange.getRequest().mutate()
+                .header(HttpHeaders.AUTHORIZATION, authHeader)
+                .build();
+        return chain.filter(exchange.mutate().request(mutatedRequest).build());
+    }
+    return chain.filter(exchange);
+}
+
+```
+
+
+## Integración de Firebase en Spring Boot 🔐
+En este proyecto, el archivo security-prs1-firebase-adminsdk-fbsvc-b47fdda0f7.json contiene las credenciales de la cuenta de servicio proporcionada por Firebase, lo que permite que tu aplicación Spring Boot se autentique como administrador. Este archivo es esencial para interactuar con servicios como Firebase Authentication y Firebase Realtime Database. A través de esta integración, puedes realizar tareas administrativas como la creación, actualización y eliminación de usuarios, la verificación de tokens JWT, y el envío de notificaciones push. Además, en el archivo application.yml, se configura la seguridad con JWT de Firebase usando Spring Security, lo que permite autenticar las solicitudes y acceder a datos protegidos de forma segura.
+
+
 
 ``` bash
 
