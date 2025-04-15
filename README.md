@@ -279,4 +279,53 @@ spring:
 
 ```
 
+### 📦 Módulo: UserService
 
+Este servicio maneja la lógica principal relacionada con la gestión de usuarios. Incluye:Creación de usuario: Guarda al usuario tanto en Firebase Authentication como en la base de datos.Actualización de usuario: Permite modificar información del usuario y actualizar roles en Firebase.Autenticación y seguridad: Cambia email o contraseña del usuario sincronizándolo con Firebase.Gestión de perfil: Permite al usuario editar sus propios datos (excepto email, contraseña y rol).Recuperación de contraseña: Envía enlace de reseteo mediante correo electrónico.Eliminación de usuario: Elimina al usuario de Firebase y de la base de datos.
+
+### Funcion Principal:  Crear un nuevo usuario 🧑
+
+Este método crea un usuario tanto en Firebase como en la base de datos:
+
+``` java
+public Mono<UserDto> createUser(UserCreateDto dto) {
+        return usersRepository.findByEmail(dto.getEmail())
+                .flatMap(existing -> Mono.error(new IllegalArgumentException("El correo ya está en uso.")))
+                .switchIfEmpty(Mono.defer(() -> {
+                    // 🔐 Crear usuario en Firebase
+                    CreateRequest request = new CreateRequest()
+                            .setEmail(dto.getEmail())
+                            .setPassword(dto.getPassword())
+                            .setEmailVerified(false)
+                            .setDisabled(false);
+                    return Mono.fromCallable(() -> FirebaseAuth.getInstance().createUser(request))
+                            .flatMap(firebaseUser -> {
+                                String uid = firebaseUser.getUid();
+                                // 🔐 Asignar claim
+                                String primaryRole = dto.getRole().isEmpty() ? "USER" : dto.getRole().get(0);
+                                return Mono.fromCallable(() -> {
+                                    FirebaseAuth.getInstance().setCustomUserClaims(uid, Map.of("role", primaryRole.toUpperCase()));
+                                    System.out.println("✅ Claim de rol asignado: " + primaryRole);
+                                    return uid;
+                                }).cast(String.class);
+                            })
+                            .flatMap(uid -> {
+                                // 🔄 Guardar en BD
+                                User user = new User();
+                                user.setFirebaseUid(uid);
+                                user.setName(dto.getName());
+                                user.setLastName(dto.getLastName());
+                                user.setDocumentType(dto.getDocumentType());
+                                user.setDocumentNumber(dto.getDocumentNumber());
+                                user.setCellPhone(dto.getCellPhone());
+                                user.setEmail(dto.getEmail());
+                                user.setPassword(passwordEncoder.encode(dto.getPassword()));
+                                user.setRole(dto.getRole());
+                                user.setProfileImage(dto.getProfileImage());
+                                return usersRepository.save(user)
+                                        .map(this::toDto)
+                                        .cast(UserDto.class);
+                            });
+                })).cast(UserDto.class);
+    }
+```
