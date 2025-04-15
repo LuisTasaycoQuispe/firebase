@@ -27,14 +27,14 @@
 
 ---
 #  Estándar de Seguridad 🛡️
-## 🔐 **Seguridad** 
+## 🔐 Seguridad
 
 - **Autenticación**: 
   - 🚀 Implementación de **JWT (JSON Web Tokens)** para una autenticación segura y eficiente.
   - 🔒 **Almacenamiento seguro de tokens**: Los tokens se almacenan de forma segura en el cliente y el servidor, evitando exposiciones de información sensible.
   - 🛡️ **Spring Security**: Integración con **Spring Security** para gestionar la autenticación, autorización y proteger las rutas del servidor contra accesos no autorizados.
 
-- **Contraseñas**: 
+- Contraseñas: 
   - 🔑 Las contraseñas son **cifradas** usando algoritmos seguros como **BCrypt** o **PBKDF2**, lo que garantiza que las contraseñas no sean almacenadas en texto claro.
   - 🧂 Se utiliza **salting** para prevenir ataques de diccionario y de fuerza bruta, añadiendo un valor único a cada contraseña antes de cifrarla.
 
@@ -42,12 +42,12 @@
   - ⏳ Los tokens de autenticación tienen una **fecha de expiración** configurada para asegurar que las sesiones no sean permanentes.
   - 🛑 **Protección CSRF** (Cross-Site Request Forgery) implementada para evitar que atacantes envíen solicitudes maliciosas en nombre del usuario.
 
-- **CORS**: 
+- CORS: 
   - 🌐 Configuración de **CORS** (Cross-Origin Resource Sharing) para asegurar que solo los orígenes permitidos puedan acceder a los recursos del servidor.
 
 ---
 
-## 🛡️ **Buenas Prácticas** 
+## 🛡️ Buenas Prácticas 
 
 - **Validación**: 
   - ✅ **Validación de entradas**: Se validan y sanitizan todos los datos de entrada para evitar ataques como inyecciones SQL y XSS.
@@ -94,7 +94,7 @@
 
 
 
-### 🎨 **FrontEnd** 🧩
+## 🎨 FrontEnd 🧩
 
 El **`AuthService`** se encarga de gestionar toda la autenticación y autorización de usuarios en la aplicación. Utiliza Firebase para el inicio de sesión, almacenamiento de tokens en el `localStorage` y la obtención de información del usuario desde la API. Además, verifica el estado de autenticación, maneja la asignación de roles (como `ADMIN`), permite la reautenticación para cambios sensibles y gestiona la actualización de datos como la contraseña y el correo electrónico del usuario. También incluye funcionalidades para enviar solicitudes de restablecimiento de contraseña y cerrar sesión, limpiando los datos de autenticación almacenados.
 
@@ -119,7 +119,7 @@ El **`AuthService`** se encarga de gestionar toda la autenticación y autorizaci
 ---
 
 
-## Inicio de Sesion - Usuario o Admin 💁‍♂️
+## Inicio de Sesion n 💁‍♂️
 
 <img src="https://static.vecteezy.com/system/resources/thumbnails/027/205/841/small_2x/login-and-password-concept-3d-illustration-computer-and-account-login-and-password-form-page-on-screen-3d-illustration-png.png" alt="Imagen de api" width="150" align="left" style="margin-right: 20px; margin-bottom: 20px;">
 
