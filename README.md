@@ -8,7 +8,7 @@
 
 ## [![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Bungee+Spice&size=22&pause=1000&width=803&lines=%F0%9F%93%82+Estructura+de+Carpetas+del+Proyecto+Frontend+(Security))](https://git.io/typing-svg)
 
-#### Estructura de Archivos:
+### Estructura de Archivos:
 
 ```bash
 📁 app
@@ -52,7 +52,7 @@ El **`AuthService`** se encarga de gestionar toda la autenticación y autorizaci
 ---
 
 
-### Inicio de Sesion - Usuario o Admin 💁‍♂️
+## Inicio de Sesion - Usuario o Admin 💁‍♂️
 
 <img src="https://static.vecteezy.com/system/resources/thumbnails/027/205/841/small_2x/login-and-password-concept-3d-illustration-computer-and-account-login-and-password-form-page-on-screen-3d-illustration-png.png" alt="Imagen de api" width="150" align="left" style="margin-right: 20px; margin-bottom: 20px;">
 
@@ -93,7 +93,7 @@ login(email: string, password: string): Observable<any> {
   }
 
 ```
-### Manejo de Roles 👑 
+## Manejo de Roles 👑 
 
 <img src="https://scientiait.blob.core.windows.net/programandoamedianoche/wp-content/uploads/2009/10/authentication.png" alt="Imagen de api" width="180" align="left" style="margin-right: 20px; margin-bottom: 20px;">
 
@@ -137,7 +137,7 @@ checkIfAdmin(): Observable<boolean> {
 
 ---
 
-###   🛡️🔐 Proteccion de Rutas Mediante **AuthGuard**  
+##   🛡️🔐 Proteccion de Rutas Mediante **AuthGuard**  
 
 </br>
 Este archivo define un guardia de autenticación (`AuthGuard`) en Angular, que protege las rutas de la aplicación asegurándose de que solo los usuarios autenticados y con los roles adecuados puedan acceder a ciertas páginas. Si el usuario no está autenticado o no tiene el rol requerido, se redirige automáticamente al login o a la página de inicio. Además, evita que los usuarios autenticados accedan nuevamente a la página de login.
@@ -234,7 +234,7 @@ api-gateway/
 ```
 
 
-###  🔐 Configuración de Seguridad y CORS en el API Gateway
+##  🔐 Configuración de Seguridad y CORS en el API Gateway
 
 En este proyecto, se ha configurado el **API Gateway** para manejar la seguridad, autenticación y control de acceso a los microservicios, además de gestionar las solicitudes CORS entre el frontend y el backend.
 
@@ -259,7 +259,7 @@ Esta clase configura la seguridad para las solicitudes que llegan al API Gateway
 ```
 
 
-#### 2. 🌐 **Configuración de CORS (WebConfig)**
+### 2. 🌐 **Configuración de CORS (WebConfig)**
 
 Se configura **CORS** para permitir que las peticiones del frontend (en este caso, ejecutado en `localhost:4200`) puedan interactuar con el **API Gateway** sin problemas de seguridad:
 
