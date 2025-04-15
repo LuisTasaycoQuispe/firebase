@@ -193,7 +193,46 @@ private checkAccess(expectedRole?: string): Observable<boolean | UrlTree> {
 
 ## 📂 **Estructura de Carpetas del Proyecto** Backend
 
+## API Gateway
 
+
+<img src="https://cdn-icons-png.flaticon.com/512/10169/10169724.png" alt="Imagen de api" width="130" align="left" style="margin-right: 20px; margin-bottom: 20px;">
+
+El **API Gateway** es el punto de entrada único para todas las solicitudes que llegan a una aplicación con microservicios. Se encarga de redirigir las peticiones a los microservicios correctos y puede manejar tareas como autenticación, seguridad, control de acceso y manejo de errores. Al usar un API Gateway, el cliente solo necesita conocer una URL, lo que simplifica la comunicación y mejora el control sobre el tráfico y las peticiones.
+
+</br>
+
+
+### ⚙️ Funciones principales del API Gateway:
+
+
+| **Función**                     | **Descripción**                                                                 |
+|----------------------------------|---------------------------------------------------------------------------------|
+| 🔁 **Enrutamiento de peticiones**   | Redirige las solicitudes entrantes al microservicio correspondiente según la URL. |
+| 🔐 **Seguridad y autenticación**    | Verifica tokens JWT u otros mecanismos antes de permitir el acceso.             |
+| 🧰 **Filtros personalizados**       | Como validar cabeceras, modificar peticiones/respuestas, agregar logs, etc.     |
+| 🌐 **CORS y configuración de acceso** | Permite definir desde qué dominios se aceptan peticiones.                      |
+| 📉 **Manejo de errores centralizado** | Permite manejar y devolver errores de forma consistente.                       |
+
+
+
+``` bash
+
+api-gateway/
+├── 📁 src/
+│   └── 📁 main/
+│       ├── 📁 java/pe/edu/vallegrande/apigateway/
+│       │   ├── 📁 config/
+│       │   │   ├── 📄 SecurityConfig.java        # Configuración de seguridad (CORS, CSRF, etc.)
+│       │   │   └── 📄 WebConfig.java             # Configuración web general
+│       │   ├── 📁 filter/
+│       │   │   ├── 📄 AuthHeaderFilter.java      # Filtro personalizado para autenticación con headers
+│       │   └── 📄 ApiGatewayApplication.java     # Clase principal Spring Boot
+│       └── 📁 resources/
+│           └── 📄 application.yml                # Configuración de rutas, puertos, CORS, etc.
+
+
+```
 
 ``` bash
 
